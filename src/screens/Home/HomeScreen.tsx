@@ -6,23 +6,26 @@ import RestaurantCard from '../../components/RestaurantCard';
 import {HomeScreenProps} from '../../types/navigation.types';
 import SignOut from '../../components/svg/SignOut';
 import {CommonActions} from '@react-navigation/native';
+import {deleteSecureValue} from '../../helpers/secureStorage';
+import {secureStoreKeys} from '../../constants/secureStoreKeys';
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
+  const onSignOut = async () => {
+    await deleteSecureValue(secureStoreKeys.isLoggedIn);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Auth',
+          },
+        ],
+      }),
+    );
+  };
   const rightAction = () => {
     return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [
-                {
-                  name: 'Auth',
-                },
-              ],
-            }),
-          )
-        }>
+      <TouchableOpacity onPress={() => onSignOut()}>
         <SignOut fill={'#FFF'} />
       </TouchableOpacity>
     );
