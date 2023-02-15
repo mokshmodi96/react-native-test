@@ -14,3 +14,5 @@ export type MainStackRoutes = {
 };
 
 export type LoginScreenProps = NativeStackScreenProps<AuthStackRoutes, 'Login'>;
+export type HomeScreenProps = NativeStackScreenProps<MainStackRoutes, 'Home'>;
+export type MapScreenProps = NativeStackScreenProps<MainStackRoutes, 'Map'>;

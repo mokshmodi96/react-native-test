@@ -5,10 +5,9 @@ import MapScreen from '../screens/Home/MapScreen';
 import {MainStackRoutes} from '../types/navigation.types';
 
 const Stack = createNativeStackNavigator<MainStackRoutes>();
-
 const MainStack: React.FC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
     </Stack.Navigator>
