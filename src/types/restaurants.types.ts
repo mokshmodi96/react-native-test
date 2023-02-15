@@ -5,3 +5,8 @@ export type Restaurant = {
   longitude: string;
   rating: number;
 };
+
+export type RestaurantState = {
+  restaurants: Restaurant[];
+  loading: boolean;
+};

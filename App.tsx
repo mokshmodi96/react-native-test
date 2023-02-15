@@ -9,6 +9,8 @@ import RootStack from './src/navigation/RootStack';
 import RNBootSplash from 'react-native-bootsplash';
 import {getSecureValue} from './src/helpers/secureStorage';
 import {secureStoreKeys} from './src/constants/secureStoreKeys';
+import store from './src/redux/store';
+import {Provider} from 'react-redux';
 
 const App: React.FC = () => {
   const navigationRef = useNavigationContainerRef();
@@ -25,12 +27,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <NavigationContainer onReady={() => onReady()} ref={navigationRef}>
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle={'light-content'} translucent animated />
-        <RootStack />
-      </SafeAreaView>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer onReady={() => onReady()} ref={navigationRef}>
+        <SafeAreaView style={styles.container}>
+          <StatusBar barStyle={'light-content'} translucent animated />
+          <RootStack />
+        </SafeAreaView>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
