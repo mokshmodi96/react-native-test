@@ -3,10 +3,10 @@ import {StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import RootStack from './src/navigation/RootStack';
-
+import RNBootSplash from 'react-native-bootsplash';
 const App: React.FC = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={() => RNBootSplash.hide()}>
       <SafeAreaView style={styles.container}>
         <RootStack />
       </SafeAreaView>

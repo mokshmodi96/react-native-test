@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator<MainRoutes>();
 
 const RootStack: React.FC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Main" component={MainStack} />
     </Stack.Navigator>

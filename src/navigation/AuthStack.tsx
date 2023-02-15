@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator<AuthStackRoutes>();
 
 const AuthStack: React.FC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
