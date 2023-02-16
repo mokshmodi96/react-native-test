@@ -1,12 +1,18 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import StarRating from 'react-native-star-rating-widget';
 import {color, spacing} from '../constants/theme';
 
 interface RestaurantCardProps {
   title: string;
   onPress: () => void;
+  rating: number;
 }
-const RestaurantCard: React.FC<RestaurantCardProps> = ({title, onPress}) => {
+const RestaurantCard: React.FC<RestaurantCardProps> = ({
+  title,
+  onPress,
+  rating,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
@@ -16,8 +22,16 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({title, onPress}) => {
           borderRadius={4}
         />
       </View>
-      <View style={styles.center}>
-        <Text>{title}</Text>
+      <View style={styles.center} pointerEvents={'none'}>
+        <Text style={styles.textStyle}>{title}</Text>
+        <StarRating
+          rating={rating}
+          onChange={() => {}}
+          starSize={22}
+          starStyle={styles.starStyle}
+          maxStars={Math.ceil(rating)}
+          enableHalfStar
+        />
       </View>
       <View style={styles.right}>
         <TouchableOpacity style={styles.buttonStyle} onPress={() => onPress()}>
@@ -54,7 +68,17 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
   },
-  center: {flex: 2},
+  center: {
+    flex: 2,
+    justifyContent: 'center',
+  },
+  textStyle: {
+    color: color.black,
+    fontSize: spacing.m - 2,
+    marginLeft: spacing.s - 4,
+    marginBottom: spacing.s - 4,
+  },
+  starStyle: {marginLeft: 0, marginRight: 0},
   right: {flex: 1, alignItems: 'flex-end', justifyContent: 'center'},
   buttonStyle: {
     backgroundColor: color.primaryColor,

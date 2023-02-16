@@ -71,6 +71,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           renderItem={({item}) => (
             <RestaurantCard
               title={item?.title}
+              rating={item?.rating}
               onPress={() => navigation.navigate('Map')}
             />
           )}
