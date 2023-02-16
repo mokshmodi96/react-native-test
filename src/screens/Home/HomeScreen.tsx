@@ -20,6 +20,15 @@ import {
   selectRestaurants,
   selectRestaurantsLoading,
 } from '../../redux/Restaurants/restaurants.selector';
+import {
+  check,
+  openSettings,
+  PERMISSIONS,
+  request,
+  RESULTS,
+} from 'react-native-permissions';
+import {Restaurant} from '../../types/restaurants.types';
+import Toast from 'react-native-simple-toast';
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const dispatch = useAppDispatch();
@@ -44,6 +53,48 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         <SignOut fill={'#FFF'} />
       </TouchableOpacity>
     );
+  };
+
+  const onMapPress = (item: Restaurant) => {
+    check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+      .then(result => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log(
+              'This feature is not available (on this device / in this context)',
+            );
+            break;
+          case RESULTS.DENIED:
+            console.log(
+              'The permission has not been requested / is denied but requestable',
+            );
+            request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(res => {
+              if (res === RESULTS.GRANTED) {
+                navigation.navigate('Map', {selectedRestaurant: item});
+              } else {
+                Toast.show('Permission Required!', 1000);
+                openSettings().catch(() =>
+                  console.warn('cannot open settings'),
+                );
+              }
+            });
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            navigation.navigate('Map', {selectedRestaurant: item});
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+        }
+      })
+      .catch(_error => {
+        Toast.show('Permission Required!', 1000);
+        openSettings().catch(() => console.warn('cannot open settings'));
+      });
   };
 
   useEffect(() => {
@@ -72,7 +123,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
             <RestaurantCard
               title={item?.title}
               rating={item?.rating}
-              onPress={() => navigation.navigate('Map')}
+              onPress={() => onMapPress(item)}
             />
           )}
           keyExtractor={item => item?.title}

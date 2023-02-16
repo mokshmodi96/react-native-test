@@ -1,4 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Restaurant} from './restaurants.types';
 
 export type MainRoutes = {
   Auth: undefined;
@@ -10,7 +11,7 @@ export type AuthStackRoutes = {
 };
 export type MainStackRoutes = {
   Home: undefined;
-  Map: undefined;
+  Map: {selectedRestaurant: Restaurant};
 };
 
 export type LoginScreenProps = NativeStackScreenProps<AuthStackRoutes, 'Login'>;
